@@ -2,22 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter_klone/common/common.dart';
 import 'package:twitter_klone/constants/constants.dart';
-import 'package:twitter_klone/features/auth/views/sign_up_view.dart';
+import 'package:twitter_klone/features/auth/views/login_view.dart';
 import 'package:twitter_klone/features/auth/widgets/auth_field.dart';
 import 'package:twitter_klone/theme/theme.dart';
 
-class LoginView extends StatefulWidget {
+class SignUpView extends StatefulWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const LoginView(),
-      );
-
-  const LoginView({super.key});
+    builder: (context) => const SignUpView(),
+  );
+  const SignUpView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignUpViewState extends State<SignUpView> {
   final appBar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -60,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                 alignment: Alignment.centerRight,
                 child: RoundedSmallButton(
                   onTap: () {},
-                  label: 'Login',
+                  label: 'Create',
                 ),
               ),
               const SizedBox(
@@ -69,13 +68,13 @@ class _LoginViewState extends State<LoginView> {
               //textspan forgot password
               RichText(
                 text: TextSpan(
-                  text: 'Don\'t have an account?',
+                  text: 'Already have an account?',
                   style: const TextStyle(
                     fontSize: 16,
                   ),
                   children: [
                     TextSpan(
-                      text: ' Sign Up',
+                      text: ' Login',
                       style: const TextStyle(
                         color: Pallete.blueColor,
                         fontSize: 16,
@@ -84,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
                         ..onTap = () {
                           Navigator.push(
                             context,
-                            SignUpView.route(),
+                            LoginView.route(),
                           );
                         },
                     ),
