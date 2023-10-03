@@ -1,12 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_klone/common/common.dart';
 import 'package:twitter_klone/constants/constants.dart';
+import 'package:twitter_klone/features/auth/controller/auth_controller.dart';
 import 'package:twitter_klone/features/auth/views/sign_up_view.dart';
 import 'package:twitter_klone/features/auth/widgets/auth_field.dart';
 import 'package:twitter_klone/theme/theme.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const LoginView(),
       );
@@ -14,10 +16,10 @@ class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   final appBar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -30,11 +32,20 @@ class _LoginViewState extends State<LoginView> {
     passwordController.dispose();
   }
 
+  void onLogin() {
+    ref.read(authControllerProvider.notifier).login(
+          email: emailController.text,
+          password: passwordController.text,
+          context: context,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading=ref.watch(authControllerProvider);
     return Scaffold(
       appBar: appBar,
-      body: Center(
+      body: isLoading?const Loader(): Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -59,7 +70,9 @@ class _LoginViewState extends State<LoginView> {
               Align(
                 alignment: Alignment.centerRight,
                 child: RoundedSmallButton(
-                  onTap: () {},
+                  onTap: () {
+                    return onLogin();
+                  },
                   label: 'Login',
                 ),
               ),

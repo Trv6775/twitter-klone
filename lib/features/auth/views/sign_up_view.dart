@@ -41,71 +41,74 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
       appBar: appBar,
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              //textfield 1 username/email
-              AuthField(
-                controller: emailController,
-                hintText: 'Email/Username',
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              //textfield 2 password
-              AuthField(
-                controller: passwordController,
-                hintText: 'Password',
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              //login button
-              Align(
-                alignment: Alignment.centerRight,
-                child: RoundedSmallButton(
-                  onTap: () {
-                    onSignUp();
-                  },
-                  label: 'Create',
-                ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              //textspan forgot password
-              RichText(
-                text: TextSpan(
-                  text: 'Already have an account?',
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+      body: isLoading
+          ? const Loader()
+          : Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
                   children: [
-                    TextSpan(
-                      text: ' Login',
-                      style: const TextStyle(
-                        color: Pallete.blueColor,
-                        fontSize: 16,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                            context,
-                            LoginView.route(),
-                          );
+                    //textfield 1 username/email
+                    AuthField(
+                      controller: emailController,
+                      hintText: 'Email/Username',
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    //textfield 2 password
+                    AuthField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    //login button
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: RoundedSmallButton(
+                        onTap: () {
+                          onSignUp();
                         },
+                        label: 'Create',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    //textspan forgot password
+                    RichText(
+                      text: TextSpan(
+                        text: 'Already have an account?',
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: ' Login',
+                            style: const TextStyle(
+                              color: Pallete.blueColor,
+                              fontSize: 16,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  LoginView.route(),
+                                );
+                              },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
